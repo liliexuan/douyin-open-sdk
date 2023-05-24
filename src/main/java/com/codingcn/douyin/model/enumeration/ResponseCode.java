@@ -59,10 +59,10 @@ public enum ResponseCode {
     }
 
     /**
-     * 根据错误码返回枚举，如果不存在则返回 @see {@link ResponseCode.UNKNOWN}
+     * 根据错误码返回枚举，如果不存在则返回 @see {@link ResponseCode} UNKNOWN
      *
-     * @param errorNo
-     * @return
+     * @param errorNo 错误码
+     * @return ResponseCode 错误枚举
      */
     public static ResponseCode getResponseCode(String errorNo) {
         for (ResponseCode value : ResponseCode.values()) {
