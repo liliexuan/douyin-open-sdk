@@ -14,7 +14,7 @@ public class DouyinResponse implements Serializable {
     /**
      * 响应编码
      */
-    private Integer errNo;
+    private String errNo;
 
     /**
      * 响应编码描述
@@ -22,13 +22,13 @@ public class DouyinResponse implements Serializable {
     private String errTips;
 
 
-    private Map<String, Object> data;
+    private Map<String, Serializable> data;
 
-    public Integer getErrNo() {
+    public String getErrNo() {
         return errNo;
     }
 
-    public void setErrNo(Integer errNo) {
+    public void setErrNo(String errNo) {
         this.errNo = errNo;
     }
 
@@ -44,7 +44,7 @@ public class DouyinResponse implements Serializable {
         return data;
     }
 
-    public void setData(Map<String, Object> data) {
+    public void setData(Map<String, Serializable> data) {
         this.data = data;
     }
 }
