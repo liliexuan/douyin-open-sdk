@@ -40,7 +40,7 @@ public class DouyinResponse implements Serializable {
         this.errTips = errTips;
     }
 
-    public Map<String, Object> getData() {
+    public Map<String, Serializable> getData() {
         return data;
     }
 
