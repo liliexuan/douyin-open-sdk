@@ -1,18 +1,12 @@
-package com.codingcn.douyin.config;
+package com.codingcn.douyin;
 
 /**
- * @author liliexuan
- */
-public class DouyinConfig {
-
-    /**
-     * 抖音正式环境
-     */
-    private static final String PRODUCT_DOMAIN = "https://developer.toutiao.com";
-    /**
-     * 抖音沙箱环境
-     */
-    private static final String SANDBOX_DOMAIN = "https://open-sandbox.douyin.com";
+ * 抖音配置上下文
+ *
+ * @author liexuan
+ * @date 2023-05-18 16:41
+ **/
+public class Context {
 
     private String domain;
 
