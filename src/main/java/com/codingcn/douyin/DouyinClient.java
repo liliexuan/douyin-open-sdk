@@ -1,5 +1,6 @@
 package com.codingcn.douyin;
 
+import cn.hutool.core.lang.Pair;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.http.Method;
 import cn.hutool.log.Log;
@@ -29,10 +30,10 @@ public class DouyinClient extends AbstractClient {
      */
     public Client getAccessToken() {
         requestWrapper = new RequestWrapper();
-        Map<String, String> params = MapUtil.ofEntries(
-                MapUtil.entry("appid", context.getAppId()),
-                MapUtil.entry("secret", context.getSecret()),
-                MapUtil.entry("grant_type", "client_credential")
+        Map<String, String> params = MapUtil.of(
+                Pair.of("appid", context.getAppId()),
+                Pair.of("secret", context.getSecret()),
+                Pair.of("grant_type", "client_credential")
         );
         requestWrapper.setParams(params).setMethod(Method.POST).setUri(DouyinUriConstant.GET_ACCESS_TOKEN_URI);
         return this;
@@ -41,11 +42,11 @@ public class DouyinClient extends AbstractClient {
 
     public Client code2Session(String code, String anonymousCode) {
         requestWrapper = new RequestWrapper();
-        Map<String, String> params = MapUtil.ofEntries(
-                MapUtil.entry("appid", context.getAppId()),
-                MapUtil.entry("secret", context.getSecret()),
-                MapUtil.entry("code", code),
-                MapUtil.entry("anonymous_code", anonymousCode)
+        Map<String, String> params = MapUtil.of(
+                Pair.of("appid", context.getAppId()),
+                Pair.of("secret", context.getSecret()),
+                Pair.of("code", code),
+                Pair.of("anonymous_code", anonymousCode)
         );
         requestWrapper.setParams(params).setMethod(Method.POST).setUri(DouyinUriConstant.GET_CODE2SESSION_URI);
         return this;

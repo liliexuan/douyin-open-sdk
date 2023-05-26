@@ -1,20 +1,151 @@
-plugins {
-    id 'java'
+buildscript {
+    repositories {
+        maven {
+            credentials {
+                username 'xxx'
+                password 'xxx'
+            }
+            url 'https://packages.aliyun.com/maven/repository/xxx-release-guB0k3/'
+        }
+        maven { url 'https://maven.aliyun.com/repository/public/' }
+        maven { url 'https://maven.aliyun.com/repository/spring/' }
+    }
 }
 
-group 'com.codingcn'
-version '1.0-SNAPSHOT'
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+}
 
-repositories {
-    mavenCentral()
+allprojects {
+    group = "com.codingcn"
+    version = "0.0.1-SNAPSHOT"
+
+    ext {
+        hutoolVersion = '5.7.22'
+        junitVersion = '5.8.1'
+    }
+
+    repositories {
+        maven {
+            credentials {
+                username 'xxx'
+                password 'xxx'
+            }
+            url 'https://packages.aliyun.com/maven/repository/xxx-snapshot-tiLbog/'
+        }
+        maven {
+            credentials {
+                username 'xxx'
+                password 'xxx'
+            }
+            url 'https://packages.aliyun.com/maven/repository/xxx-release-guB0k3/'
+        }
+        maven { url 'https://maven.aliyun.com/repository/public/' }
+        maven { url 'https://maven.aliyun.com/repository/spring/' }
+    }
+
+    task showVersion {
+        doLast {
+            println 'Version: ' + project.version
+        }
+    }
+}
+
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
+    apply plugin: "jacoco"
+
+    dependencies {
+        testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+        implementation("cn.hutool:hutool-all:$hutoolVersion")
+    }
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+            csv.enabled false
+            html.enabled false
+        }
+    }
+    plugins.withType(JacocoPlugin) {
+        tasks["test"].finalizedBy 'jacocoTestReport'
+    }
+
+    compileJava.dependsOn(processResources)
+
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+        options.encoding = "UTF-8"
+    }
+
+    jar {
+        enabled = true
+        manifest {
+            attributes 'Implementation-Version': project.version
+        }
+    }
+
+    javadoc {
+        options.encoding = 'UTF-8'
+        failOnError = false
+    }
+
+    task sourceJar(type: Jar) {
+        archiveClassifier.set('sources')
+        from sourceSets.main.allSource
+    }
+
+    task docJar(type: Jar, dependsOn: javadoc) {
+        archiveClassifier.set('javadoc')
+        from javadoc.destinationDir
+    }
+
+    test {
+        useJUnitPlatform()
+        minHeapSize = "1024m"
+        maxHeapSize = "2048m"
+    }
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-    implementation 'cn.hutool:hutool-all:5.8.18'
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+    implementation("cn.hutool:hutool-all:$hutoolVersion")
 }
 
 test {
     useJUnitPlatform()
+}
+
+java {
+//    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    repositories {
+        maven {
+            def isSnapshot = version.endsWith("SNAPSHOT")
+            def releasesRepoUrl = 'https://packages.aliyun.com/maven/repository/xxx-release-guB0k3/'
+            def snapshotsRepoUrl = 'https://packages.aliyun.com/maven/repository/xxx-snapshot-tiLbog/'
+
+            url isSnapshot ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username = 'xxx'
+                password = 'xxx'
+            }
+        }
+    }
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
 }
