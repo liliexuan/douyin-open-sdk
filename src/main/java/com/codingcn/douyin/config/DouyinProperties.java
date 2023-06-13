@@ -27,6 +27,11 @@ public class DouyinProperties {
 
     private String appId;
 
+    /**
+     * 抖音商户号
+     */
+    private String mrchCode;
+
     private String secret;
     /**
      * 平台公钥
@@ -60,6 +65,14 @@ public class DouyinProperties {
 
     public void setAppId(String appId) {
         this.appId = appId;
+    }
+
+    public String getMrchCode() {
+        return mrchCode;
+    }
+
+    public void setMrchCode(String mrchCode) {
+        this.mrchCode = mrchCode;
     }
 
     public String getSecret() {
