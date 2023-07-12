@@ -8,7 +8,6 @@ import cn.hutool.json.JSONUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.codingcn.douyin.model.RequestWrapper;
-import com.codingcn.douyin.model.response.DouyinResponse;
 import com.codingcn.douyin.util.SignUtil;
 
 /**
@@ -29,10 +28,10 @@ public abstract class AbstractClient implements Client {
      * @return
      */
     @Override
-    public abstract DouyinResponse execute();
+    public abstract <T> T execute();
 
 
-    protected DouyinResponse execute(RequestWrapper requestWrapper) {
+    protected <T> T execute(RequestWrapper requestWrapper, Class<T> clazz) {
         Method method = requestWrapper.getMethod();
         HttpRequest httpRequest;
         switch (method) {
@@ -70,6 +69,6 @@ public abstract class AbstractClient implements Client {
         }
         HttpResponse response = httpRequest.execute();
         LOGGER.debug("请求抖音返回 body = {}", response.body());
-        return JSONUtil.toBean(response.body(), DouyinResponse.class);
+        return JSONUtil.toBean(response.body(), clazz);
     }
 }

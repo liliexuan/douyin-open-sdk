@@ -50,7 +50,7 @@ public class RequestWrapper {
     /**
      * 请求参数
      */
-    private Map<String, String> params;
+    private Map<String, Object> params;
 
     /**
      * 是否需要签名
@@ -60,7 +60,7 @@ public class RequestWrapper {
     public RequestWrapper() {
     }
 
-    public RequestWrapper(String uri, Method method, Map<String, String> params) {
+    public RequestWrapper(String uri, Method method, Map<String, Object> params) {
         this.uri = uri;
         this.method = method;
         this.params = params;
@@ -92,11 +92,11 @@ public class RequestWrapper {
         return this;
     }
 
-    public Map<String, String> getParams() {
+    public Map<String, Object> getParams() {
         return params;
     }
 
-    public RequestWrapper setParams(Map<String, String> params) {
+    public RequestWrapper setParams(Map<String, Object> params) {
         this.params = params;
         return this;
     }

@@ -30,7 +30,7 @@ public class DouyinClient extends AbstractClient {
      */
     public Client getAccessToken() {
         requestWrapper = new RequestWrapper();
-        Map<String, String> params = MapUtil.of(
+        Map<String, Object> params = MapUtil.of(
                 Pair.of("appid", context.getAppId()),
                 Pair.of("secret", context.getSecret()),
                 Pair.of("grant_type", "client_credential")
@@ -42,7 +42,7 @@ public class DouyinClient extends AbstractClient {
 
     public Client code2Session(String code, String anonymousCode) {
         requestWrapper = new RequestWrapper();
-        Map<String, String> params = MapUtil.of(
+        Map<String, Object> params = MapUtil.of(
                 Pair.of("appid", context.getAppId()),
                 Pair.of("secret", context.getSecret()),
                 Pair.of("code", code),
@@ -56,7 +56,7 @@ public class DouyinClient extends AbstractClient {
     @Override
     public DouyinResponse execute() {
         LOGGER.debug("即将调用抖音接口, requestWrapper = {}", requestWrapper);
-        return super.execute(requestWrapper);
+        return super.execute(requestWrapper, DouyinResponse.class);
     }
 
 

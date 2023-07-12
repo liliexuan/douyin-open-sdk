@@ -20,4 +20,10 @@ public class DouyinUriConstant {
      * https://developer.open-douyin.com/docs/resource/zh-CN/mini-app/develop/server/log-in/code-2-session
      */
     public static final String GET_CODE2SESSION_URI = "/api/apps/v2/jscode2session";
+
+    /**
+     * 抖音订单同步
+     * https://developer.open-douyin.com/docs/resource/zh-CN/mini-app/develop/server/ecpay/order/order-sync
+     */
+    public static final String POST_ORDER_SYNC = "/api/apps/order/v2/push";
 }

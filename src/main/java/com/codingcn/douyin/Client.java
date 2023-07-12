@@ -1,7 +1,5 @@
 package com.codingcn.douyin;
 
-import com.codingcn.douyin.model.response.DouyinResponse;
-
 /**
  * 抖音api调用接口
  *
@@ -16,5 +14,5 @@ public interface Client {
      *
      * @return
      */
-    DouyinResponse execute();
+    <T> T execute();
 }

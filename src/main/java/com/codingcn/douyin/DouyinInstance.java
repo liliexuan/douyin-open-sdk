@@ -1,5 +1,7 @@
 package com.codingcn.douyin;
 
+import com.codingcn.douyin.api.DouyinOrderApi;
+
 /**
  * 抖音sdk调用实例
  *
@@ -23,6 +25,10 @@ public class DouyinInstance {
         return new DouyinClient(this.getContext());
     }
 
+
+    public DouyinOrderApi orderApi() {
+        return new DouyinOrderApi(this.getContext());
+    }
 
     public Context getContext() {
         return context;
