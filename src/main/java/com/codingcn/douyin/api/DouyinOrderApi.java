@@ -15,6 +15,8 @@ import com.codingcn.douyin.model.RequestWrapper;
 import com.codingcn.douyin.model.request.OrderSyncRequest;
 import com.codingcn.douyin.model.response.DouyinOrderSyncResponse;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,13 +35,19 @@ public class DouyinOrderApi extends AbstractClient {
 
     public Client orderSync(OrderSyncRequest request) {
         requestWrapper = new RequestWrapper();
+        List<Map<String, Object>> itemList = new ArrayList<>();
+        request.getOrderDetail().getItemList().forEach(item -> {
+            itemList.add(BeanUtil.beanToMap(item, true, false));
+        });
+        Map<String, Object> orderDetailMap = BeanUtil.beanToMap(request.getOrderDetail(), true, false);
+        orderDetailMap.put("item_list", itemList);
         Map<String, Object> params = MapUtil.of(
                 Pair.of("client_key", request.getClientKey()),
                 Pair.of("access_token", request.getAccessToken()),
                 Pair.of("ext_shop_id", request.getExtShopId()),
                 Pair.of("app_name", request.getAppName()),
                 Pair.of("open_id", request.getOpenId()),
-                Pair.of("order_detail", JSONUtil.toJsonStr(BeanUtil.beanToMap(request.getOrderDetail(), true, false))),
+                Pair.of("order_detail", JSONUtil.toJsonStr(orderDetailMap)),
                 Pair.of("order_status", request.getOrderStatus()),
                 Pair.of("order_type", request.getOrderType()),
                 Pair.of("update_time", request.getUpdateTime()),
